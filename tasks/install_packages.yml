@@ -1,0 +1,7 @@
+---
+# deploy_rancher_via_helm/tasks/install_packages.yml
+
+- name: "Install packages required by Ansible's helm module"
+  package:
+    name: "{{ required_packages }}"
+    state: 'present'
