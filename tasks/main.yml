@@ -1,0 +1,74 @@
+---
+# deploy_rancher_via_helm/tasks/main.yml
+
+#
+# cert-manager
+#
+
+- name: 'Download cert-manager CRD manifest'
+  ansible.builtin.get_url:
+    url: 'https://github.com/jetstack/cert-manager/releases/download/v1.0.4/cert-manager.crds.yaml'
+    dest: '~/cert-manager.crds.yaml'
+    mode: '0644'
+  become: false
+  delegate_to: 'localhost'
+
+- name: 'Install CRDs for cert-manager'
+  k8s:
+    host: "{{ inventory_hostname }}"
+    kubeconfig: "{{ path_to_kubeconfig }}"
+    state: 'present'
+    src: '~/cert-manager.crds.yaml'
+    validate:
+      fail_on_error: 'no'
+      strict: 'no'
+  become: false
+  delegate_to: 'localhost'
+
+- name: 'Create the namespace for cert-manager'
+  k8s:
+    host: "{{ inventory_hostname }}"
+    kubeconfig: "{{ path_to_kubeconfig }}"
+    state: 'present'
+    name: 'cert-manager'
+    api_version: 'v1'
+    kind: 'Namespace'
+
+# - name: 'Install certmanager'
+#   helm:
+#     host: 'localhost'
+#     chart:
+#       name: 'cert-manager'
+#       # version: '0.4.0'
+#       source:
+#         type: 'repo'
+#         location: 'https://charts.jetstack.io'
+#     state: 'present'
+#     name: 'cert-manager'
+#     namespace: 'cert-manager'
+
+#
+# Rancher
+#
+
+- name: 'Create the namespace cattle-system for Rancher'
+  k8s:
+    host: "{{ inventory_hostname }}"
+    kubeconfig: "{{ path_to_kubeconfig }}"
+    name: 'cattle-system'
+    api_version: 'v1'
+    kind: 'Namespace'
+    state: 'present'
+
+#  - name: 'Install Rancher'
+#   helm:
+#     host: 'localhost'
+#     chart:
+#       name: 'rancher'
+#       # version: 'XXX'
+#       source:
+#         type: 'repo'
+#         location: 'https://releases.rancher.com/server-charts/stable'
+#     state: 'present'
+#     name: 'rancher'
+#     namespace: 'cattle-system'
