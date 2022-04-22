@@ -1,5 +1,6 @@
 galaxy_info:
   role_name: 'deploy_rancher_via_helm'
+  namespace: 'johanneskastl'
   author: 'Johannes Kastl'
   description: 'Install Rancher via helm (using Ansible, obviously)'
   company: 'B1 Systems GmbH'
