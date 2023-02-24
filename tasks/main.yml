@@ -14,7 +14,7 @@
   delegate_to: 'localhost'
 
 - name: 'Install CRDs for cert-manager'
-  k8s:
+  kubernetes.core.k8s:
     host: "{{ inventory_hostname }}"
     kubeconfig: "{{ path_to_kubeconfig }}"
     state: 'present'
@@ -26,7 +26,7 @@
   delegate_to: 'localhost'
 
 - name: 'Create the namespace for cert-manager'
-  k8s:
+  kubernetes.core.k8s:
     host: "{{ inventory_hostname }}"
     kubeconfig: "{{ path_to_kubeconfig }}"
     state: 'present'
@@ -35,7 +35,7 @@
     kind: 'Namespace'
 
 # - name: 'Install certmanager'
-#   helm:
+#   kubernetes.core.helm:
 #     host: 'localhost'
 #     chart:
 #       name: 'cert-manager'
@@ -52,7 +52,7 @@
 #
 
 - name: 'Create the namespace cattle-system for Rancher'
-  k8s:
+  kubernetes.core.k8s:
     host: "{{ inventory_hostname }}"
     kubeconfig: "{{ path_to_kubeconfig }}"
     name: 'cattle-system'
@@ -61,7 +61,7 @@
     state: 'present'
 
 #  - name: 'Install Rancher'
-#   helm:
+#   kubernetes.core.helm:
 #     host: 'localhost'
 #     chart:
 #       name: 'rancher'
