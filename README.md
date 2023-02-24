@@ -1,3 +1,5 @@
+![Ansible Lint](https://github.com/johanneskastl/ansible-role-deploy_rancher_via_helm/workflows/Ansible%20Lint/badge.svg)
+
 deploy_rancher_via_helm
 =========
 
