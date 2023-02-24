@@ -25,7 +25,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-        - { role: 'johanneskastl.deploy_rancher_via_helm' }
+        - role: 'johanneskastl.deploy_rancher_via_helm'
 
 License
 -------
